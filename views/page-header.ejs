@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html>
+<%- include('head'); -%>
+
+<body>
+
+    <div class="gtco-loader"></div>
+
+    <div id="page">
+
+
+        <% if (headerIndex === true) { %>
+            <%- include('header-index'); -%>
+        <% } else { %>
+            <%- include('header'); -%>
+        <% } %>

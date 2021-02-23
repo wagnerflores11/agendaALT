@@ -1,0 +1,155 @@
+<header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner"
+    style="background-image: url(images/IMG_4316.jpg)" data-stellar-background-ratio="0.5">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+
+    <div class="overlay"></div>
+    <div class="gtco-container">
+        <div class="row">
+            <div class="col-md-12 col-md-offset-0 text-center">
+                <div class="row row-mt-15em">
+                    <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
+                        <h1 class="cursive-font" style="margin-bottom: 5%;">Agenda ALFA!</h1>
+                        <% if(errou !='' ) { %>
+                            <div class="alert alert-danger" role="alert">
+                                <strong>
+                                    <%= errou %>
+                                </strong>
+                            </div>
+                            <% } %>
+
+                                <div class="container-css">
+                                    <div class="inner">
+                                        <span id="span">Avisos</span>
+                                        <h3 id="h3-css">Avisos</h3>
+                                        <p style="font-size: 16px !important; padding: 7px;">
+                                            A reserva deverá ser paga <strong>50% antecipada e 50% na retirada</strong>
+                                            do
+                                            Termo
+                                            de Utilização do espaço.
+                                            <br><br>
+                                            Disponibilização de talheres, pratos e xícaras para o uso.
+                                            <br><br>
+                                            <strong>Utilização permitida das 8hs às 00hs</strong>
+                                            <br>
+                                            (Após as 22hs a utilização do som alto fica expressamente proibida)
+                                        </p>
+                                    </div>
+                                </div>
+                    </div>
+                    <div class="col-md-5 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
+                        <div class="form-wrap">
+                            <div class="tab">
+                                <div class="tab-content">
+                                    <div class="tab-content-inner active" data-content="signup">
+                                        <h3 class="cursive-font">Reserva de Espaço</h3>
+
+                                        <form id="formulario" name="agendaForm" action="/reservation" method="POST"
+                                            onsubmit="valida_form()" onkeydown="return event.key != 'Enter';">
+                                            <div class="row form-group">
+                                                <div class="col-md-12">
+                                                    <label for="inputName">Nome</label>
+                                                    <input type="text" id="inputName" name="name" class="form-control"
+                                                        data-toggle="modal" data-target="#siteModal">
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label for="inputEmail">E-mail</label>
+                                                    <input type="email" id="inputEmail" name="email"
+                                                        class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-md-12">
+                                                    <label for="inputTelefone">Telefone</label>
+                                                    <input type="number" id="inputTelefone" name="phone"
+                                                        class="form-control">
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label for="inputPeople">Pessoas</label>
+                                                    <input type="number" min="1" id="inputPeople" name="people"
+                                                        class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-md-12">
+                                                    <label for="inputDate">Data</label>
+                                                    <input type="date" id="inputDate" name="date" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-md-12">
+                                                    <label for="inputSala">Local</label>
+                                                    <select id="inputSala" name="room" class="form-control">
+                                                        <option value=""> -- selecione -- </option>
+                                                        <% espaco.forEach(function(espaco){ %>
+                                                            <option value="<%=espaco.title%>">
+                                                                <%=espaco.title%>
+                                                            </option>
+                                                            <% }); %>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group py-2">
+                                                <div class="col-md-12">
+                                                    <button type="submit" onclick="saveData()" name="botaoEnviar"
+                                                        id="botao" class="btn btn-primary btn-block">Reservar
+                                                        Agora</button>
+
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        //  MASCARA CAMPO TELEFONE
+        $("#inputTelefone").mask("(00) 0000-00000");
+
+        //  NAO PERMITE O ENVIO DO FORMULARIO COM A TECLA 'ENTER'
+        $(document).on("keydown", "form", function (event) {
+            return event.key != "Enter";
+        });
+
+        //  BLOQUEIA O BOTAO SUBMIT CASO OS CAMPOS NAO ESTEJAM PREENCHIDOS
+        var inputs = $('input').on('keyup', verificarInputs);
+        var inputData = $('input').on('click', verificarInputs);
+        var selecao = $('select').on('click', verificarInputs);
+        function verificarInputs() {
+            const preenchidos = inputs.get().every(({ value }) => value)
+            const confereSelect = selecao.val()
+            const confereData = inputData.get().every(({ value }) => value)
+            $('#botao').prop('disabled', !preenchidos || !confereSelect || !confereData);
+        }
+
+        //  SALVA INFORMAÇÕES DO USUÁRIO ATÉ QUE A JANELA SEJA FECHADA
+
+        function saveData() {
+            sessionStorage.setItem('nome', $('#inputName')[0].value);
+            sessionStorage.setItem('email', $('#inputEmail')[0].value);
+            sessionStorage.setItem('telefone', $('#inputTelefone')[0].value);
+            sessionStorage.setItem('pessoas', $('#inputPeople')[0].value);
+            sessionStorage.setItem('data', $('#inputDate')[0].value);
+            sessionStorage.setItem('local', $('#inputSala')[0].value);
+        }
+
+        $('#inputName').val(sessionStorage.getItem('nome'));
+        $('#inputEmail').val(sessionStorage.getItem('email'));
+        $('#inputTelefone').val(sessionStorage.getItem('telefone'));
+        $('#inputPeople').val(sessionStorage.getItem('pessoas'));
+        $('#inputDate').val(sessionStorage.getItem('data'));
+        $('#inputSala').val(sessionStorage.getItem('local'));
+
+    </script>
+
+</header>

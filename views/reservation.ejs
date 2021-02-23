@@ -1,0 +1,36 @@
+<%- include('page-header') -%>
+
+<div class="gtco-section" style="padding-bottom: 14em;">
+    <div class="gtco-container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6 animate-box">
+
+                    <% if (typeof success === 'string') { %>
+                    <div class="alert alert-success" role="alert">
+                        <%=success%>
+                    </div>
+                    <% } %>
+                    <% if (typeof error === 'string') { %>
+                    <div class="alert alert-danger" role="alert"> <strong>Ops!</strong> <%=error%>
+                    </div>
+                    <% } %>
+
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3558.6604388067126!2d-49.15242550660705!3d-26.88252741353886!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94df1da54cfc3f9d%3A0xf3bd095639f0dae5!2sALFA-%20Associa%C3%A7%C3%A3o%20De%20Lazer%20Dos%20Funcion%C3%A1rios%20da%20Altenburg!5e0!3m2!1spt-BR!2sbr!4v1613665167495!5m2!1spt-BR!2sbr" width="505" height="200" frameborder="0" style="border:0; border-radius: 5px;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+
+                </div>
+                <div class="col-md-5 col-md-push-1 animate-box">
+                    <div class="gtco-contact-info">
+                        <h3>Informações de Contato</h3>
+                        <ul>
+                            <li class="address">ALFA- Associação De Lazer Dos Funcionários da Altenburg - Badenfurt, Blumenau - SC</li>
+                            <li class="email"><a href="mailto:alfa@altenburg.com.br">alfa@altenburg.com.br</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('page-footer') -%>
